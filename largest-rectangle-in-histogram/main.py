@@ -1,59 +1,43 @@
-from typing import List
+from typing import List, NamedTuple
 
 
-def get_area_in_inc(inc_stack: list[int]) -> int:
-    if not inc_stack:
-        return 0
-    width = 0
-    size = 0
-    height = inc_stack[-1]
-    for element in reversed(inc_stack):
-        width += 1
-        height = min(height, element)
-        size = max(size, width * height)
-    return size
+class HeightAtIndex(NamedTuple):
+    i: int
+    height: int
 
 
-def get_area_in_dec(dec_stack: list[int]) -> int:
-    if not dec_stack:
-        return 0
-    width = 0
-    size = 0
-    height = dec_stack[0]
-    for element in dec_stack:
-        width += 1
-        height = min(height, element)
-        size = max(size, width * height)
-    return size
+def calculate_area(base: int, until: int, height: int) -> int:
+    return (until - base) * height
 
 
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
-        if not heights:
-            return 0
-        inc_stack = []
-        dec_stack = []
-        max_area = 0
-        for idx, elem in enumerate(heights):
-            if idx == 0 or elem == heights[idx - 1]:
-                inc_stack.append(elem)
-                dec_stack.append(elem)
-            elif elem < heights[idx - 1]:
-                # decreasing
-                dec_stack.append(elem)
-                area = get_area_in_inc(inc_stack)
-                max_area = max(max_area, area)
-                inc_stack = []
-            elif elem > heights[idx - 1]:
-                # decreasing
-                inc_stack.append(elem)
-                area = get_area_in_dec(dec_stack)
-                max_area = max(max_area, area)
-                dec_stack = []
-        if inc_stack:
-            area = get_area_in_inc(inc_stack)
-            max_area = max(max_area, area)
-        if dec_stack:
-            area = get_area_in_dec(dec_stack)
-            max_area = max(max_area, area)
-        return max_area
+        # initialization
+        curr_max = 0
+        stack: List[HeightAtIndex] = []
+        for i, height in enumerate(heights):
+            if stack and height < stack[-1].height:
+                while True:
+                    # pop array
+                    last_height = stack.pop()
+                    # calcullate max
+                    new_area = calculate_area(last_height.i, i, last_height.height)
+                    curr_max = max(new_area, curr_max)
+                    if not stack:
+                        stack.append(HeightAtIndex(last_height.i, height))
+                        break
+                    if height >= stack[-1].height:
+                        stack.append(HeightAtIndex(last_height.i, height))
+                        break
+            else:
+                stack.append(HeightAtIndex(i, height))
+        # TODO final height
+        last_index = len(heights)
+        while stack:
+            # pop array
+            last_height = stack.pop()
+            # calcullate max
+            new_area = calculate_area(last_height.i, last_index, last_height.height)
+            curr_max = max(new_area, curr_max)
+            # last_index = last_height.i
+        return curr_max
