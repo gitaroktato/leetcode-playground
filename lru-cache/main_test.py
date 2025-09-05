@@ -1,4 +1,4 @@
-from main import LRUCache, find_min_key
+from main import LRUCache
 
 
 def test_basic_functions():
@@ -8,11 +8,6 @@ def test_basic_functions():
     assert cache.get(1) == 1
     cache.put(3, 3)
     assert cache.get(3) == 3
-
-
-def test_find_min_value():
-    timer = {1: 5, 2: 3, 3: 1, 4: 2}
-    assert find_min_key(timer) == 3
 
 
 def test_eviction():
