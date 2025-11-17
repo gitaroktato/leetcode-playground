@@ -1,4 +1,4 @@
-from typing import NamedTuple, OrderedDict
+from typing import OrderedDict
 
 
 class LRUCache(object):
