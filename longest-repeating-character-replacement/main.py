@@ -7,6 +7,7 @@ class Solution:
     #
     # Optimization: jump to first different char+1
     # Set current replacement available+1
+    # TODO: Use-case that's moving the left window more on conditions
     def characterReplacement(self, s: str, k: int) -> int:
         window_left: int = 0
         window_right: int = 0
