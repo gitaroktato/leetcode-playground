@@ -23,3 +23,9 @@ def test_main_with_longer_text():
     sol = Solution()
     res = sol.characterReplacement("AAABABB", 1)
     assert res == 5
+
+
+def test_main_with_k1_and_jump():
+    sol = Solution()
+    res = sol.characterReplacement("AABABBAABAA", 1)
+    assert res == 5

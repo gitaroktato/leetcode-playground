@@ -20,15 +20,24 @@ class Solution:
         window_left: int = 0
         window_right: int = 0
         remaining_replacements: int = 0
+        last_change = 0
+        longest_found = 0
         while window_right < len(s):
             if s[window_right] == s[window_left]:
                 window_right += 1
             elif remaining_replacements < k:
                 # We still have replacements to go
                 remaining_replacements += 1
+                last_change = window_right
                 window_right += 1
             else:
                 # Jump to first different char+1
                 # Set current replacement avail+1
-                
-        return window_right - window_left
+                longest_found = max(window_right - window_left, longest_found)
+                window_left = last_change
+                window_right = window_left
+                remaining_replacements = 0
+                last_change = window_left
+
+        longest_found = max(window_right - window_left, longest_found)
+        return longest_found
