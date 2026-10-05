@@ -29,3 +29,9 @@ def test_main_with_k1_and_jump():
     sol = Solution()
     res = sol.characterReplacement("AABABBAABAA", 1)
     assert res == 5
+
+
+def test_trick_invariants():
+    sol = Solution()
+    res = sol.characterReplacement("AAAB", 0)
+    assert res == 3
