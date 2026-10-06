@@ -35,3 +35,9 @@ def test_trick_invariants():
     sol = Solution()
     res = sol.characterReplacement("AAAB", 0)
     assert res == 3
+
+
+def test_with_letters_to_jump():
+    sol = Solution()
+    res = sol.characterReplacement("ABBB", 2)
+    assert res == 4

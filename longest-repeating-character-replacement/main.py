@@ -34,7 +34,7 @@ class Solution:
                 # Jump to first different char+1
                 # Set current replacement avail+1
                 longest_found = max(window_right - window_left, longest_found)
-                window_left = last_change
+                window_left = last_change if k > 0 else window_right
                 window_right = window_left
                 remaining_replacements = 0
                 last_change = window_left
